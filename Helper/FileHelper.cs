@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace FileTool
 {
@@ -20,7 +22,7 @@ namespace FileTool
                 FileInfo file = new FileInfo(sourceFileName);
                 if (file.Exists)
                 {
-                    file.MoveTo(targetPath, true);
+                    file.MoveTo(targetPath);
                 }
             }
             catch (Exception ex)
