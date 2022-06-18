@@ -1,0 +1,24 @@
+using System;
+
+namespace FileTool
+{
+    public static class FileHelper
+    {
+        private static void CopyToFile(string sourceName, string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            string fileName = Path.GetFileName(sourceName);
+            string targetPath = Path.Combine(folderPath, fileName);
+
+            FileInfo file = new FileInfo(sourceName);
+            if (file.Exists)
+            {
+                file.MoveTo(targetPath, true);
+            }
+        }
+    }
+}
