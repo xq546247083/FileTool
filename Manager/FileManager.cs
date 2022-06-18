@@ -44,5 +44,31 @@ namespace FileTool
 
             return fileDic.Values.Where(r => r.Count > 1).SelectMany(r => r).ToList();
         }
+
+        // 移动所有的小文件到SamllFile目录
+        public static void MoveAllSmallFileToDir(string dir, string maxFileSize)
+        {
+            if (!long.TryParse(maxFileSize, out var maxFileSizeNum))
+            {
+                Console.WriteLine("输入的数字有误");
+                return;
+            }
+
+            var reapetDir = Path.Combine(dir, "SamllFile");
+            var subFileList = FileHelper.GetAllSubFile(dir);
+            foreach (var subFileStr in subFileList)
+            {
+                var subFile = new FileInfo(subFileStr);
+                if (subFile.Name.Contains("FileTool"))
+                {
+                    continue;
+                }
+
+                if (subFile.Length/1024 < maxFileSizeNum)
+                {
+                    FileHelper.MoveToFile(subFileStr, reapetDir);
+                }
+            }
+        }
     }
 }
