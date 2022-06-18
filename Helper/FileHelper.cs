@@ -7,18 +7,25 @@ namespace FileTool
         // 移动文件到目录
         public static void MoveToFile(string sourceFileName, string targetFolderPath)
         {
-            if (!Directory.Exists(targetFolderPath))
+            try
             {
-                Directory.CreateDirectory(targetFolderPath);
+                if (!Directory.Exists(targetFolderPath))
+                {
+                    Directory.CreateDirectory(targetFolderPath);
+                }
+
+                string fileName = Path.GetFileName(sourceFileName);
+                string targetPath = Path.Combine(targetFolderPath, fileName);
+
+                FileInfo file = new FileInfo(sourceFileName);
+                if (file.Exists)
+                {
+                    file.MoveTo(targetPath, true);
+                }
             }
-
-            string fileName = Path.GetFileName(sourceFileName);
-            string targetPath = Path.Combine(targetFolderPath, fileName);
-
-            FileInfo file = new FileInfo(sourceFileName);
-            if (file.Exists)
+            catch (Exception ex)
             {
-                file.MoveTo(targetPath, true);
+                Console.WriteLine($"移动文件出现错误:{ex}");
             }
         }
 

@@ -15,30 +15,37 @@ namespace FileTool
 
             while (true)
             {
-                PrintStartTip();
+                try
+                {
+                    PrintStartTip();
 
-                var key = Console.ReadLine();
-                Console.WriteLine("正在操作，请稍候...");
-                if (key == "1")
-                {
-                    FileManager.MoveAllSubFileToDir(currentDir, currentDir);
-                }
-                else if (key == "2")
-                {
-                    FileManager.MoveAllReapetFileToDir(currentDir);
-                }
-                else if (key == "3")
-                {
-                    Console.Write("请输入最大文件大小(kb):");
-                    var fileSize = Console.ReadLine();
-                    FileManager.MoveAllSmallFileToDir(currentDir,fileSize);
-                }
-                else if (key == "0")
-                {
-                    break;
-                }
+                    var key = Console.ReadLine();
+                    Console.WriteLine("正在操作，请稍候...");
+                    if (key == "1")
+                    {
+                        FileManager.MoveAllSubFileToDir(currentDir, currentDir);
+                    }
+                    else if (key == "2")
+                    {
+                        FileManager.MoveAllReapetFileToDir(currentDir);
+                    }
+                    else if (key == "3")
+                    {
+                        Console.Write("请输入最大文件大小(kb):");
+                        var fileSize = Console.ReadLine();
+                        FileManager.MoveAllSmallFileToDir(currentDir, fileSize);
+                    }
+                    else if (key == "0")
+                    {
+                        break;
+                    }
 
-                PrintEndTip();
+                    PrintEndTip();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"出现错误:{ex}");
+                }
             }
         }
 
