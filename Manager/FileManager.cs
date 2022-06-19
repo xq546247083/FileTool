@@ -66,6 +66,24 @@ namespace FileTool
             }
         }
 
+        // 将【当前目录以及所有的子目录】的所有文件，按照文件类型分类，并移动到分类目录
+        public static void MoveAllSubFileToTypeDir(string dir)
+        {
+            var reapetDir = Path.Combine(dir, "ReapetFile");
+            var subFileList = FileHelper.GetAllSubFile(dir);
+            foreach (var subFileStr in subFileList)
+            {
+                var subFile = new FileInfo(subFileStr);
+                if (subFile.Name.Contains("FileTool"))
+                {
+                    continue;
+                }
+
+                var type = subFile.Name.Substring(subFile.Name.LastIndexOf(".") + 1);
+                FileHelper.MoveToDir(subFileStr, Path.Combine(dir,type));
+            }
+        }
+
         // 移动所有的相同文件到ReapetFile目录
         public static void MoveAllReapetFileToDir(string dir)
         {
