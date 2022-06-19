@@ -62,6 +62,12 @@ namespace FileTool
                         FileManager.MoveAllSubFileToDir(currentDir, currentDir);
                         FileManager.ReaNameAllSubFileByFileSize(currentDir);
                     }
+                    else if (key == "9")
+                    {
+                        Console.Write("请输入要包含的字符:");
+                        var containStr = Console.ReadLine();
+                        FileManager.MoveAllSubSomeFileToDir(currentDir, containStr);
+                    }
                     else if (key == "0")
                     {
                         Console.WriteLine("输入错误的数字");
@@ -88,6 +94,7 @@ namespace FileTool
             Console.WriteLine("6、将【当前目录以及所有的子目录】的所有文件，把名字包含中文的文件，移动到ChineseFile目录下");
             Console.WriteLine("7、将【当前目录以及所有的子目录】的所有文件，把名字包含英文的文件，移动到EnFile目录下");
             Console.WriteLine("8、将【当前目录以及所有的子目录】的所有文件，移动到当前目录下，并按照大小顺序重命名文件");
+            Console.WriteLine("9、将【当前目录以及所有的子目录】的所有文件，包含【特定字符】的文件，移动到【特定字符】目录下");
             Console.WriteLine("0、退出程序");
             Console.Write("输入对应的数字：");
         }

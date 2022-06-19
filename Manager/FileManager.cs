@@ -70,6 +70,32 @@ namespace FileTool
             }
         }
 
+        // 将【当前目录以及所有的子目录】的所有文件，包含【特定字符】的文件，移动到【特定字符】目录下
+        public static void MoveAllSubSomeFileToDir(string dir, string containStr)
+        {
+            var containDir = Path.Combine(dir, containStr);
+            if (containDir.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
+            {
+                Console.WriteLine("输入的支付无效，不能有特殊字符");
+                return;
+            }
+
+            var subFileList = FileHelper.GetAllSubFile(dir);
+            foreach (var subFileStr in subFileList)
+            {
+                var subFile = new FileInfo(subFileStr);
+                if (subFile.Name.Contains("FileTool"))
+                {
+                    continue;
+                }
+
+                if (subFile.Name.Contains(containStr))
+                {
+                    FileHelper.MoveToDir(subFileStr, containDir);
+                }
+            }
+        }
+
         // 将【当前目录以及所有的子目录】的所有文件，把名字包含中文的文件，移动到EnFile目录下
         public static void MoveAllSubEnFileToDir(string dir)
         {
