@@ -39,7 +39,7 @@ namespace FileTool
                         Console.Write("请输入最大文件大小(kb):");
                         var maxFileSize = Console.ReadLine();
 
-                        FileManager.MoveAllSuitFileToDir(currentDir, minFileSize,maxFileSize);
+                        FileManager.MoveAllSuitFileToDir(currentDir, minFileSize, maxFileSize);
                     }
                     else if (key == "4")
                     {
@@ -56,6 +56,11 @@ namespace FileTool
                     else if (key == "7")
                     {
                         FileManager.MoveAllSubEnFileToDir(currentDir);
+                    }
+                    else if (key == "8")
+                    {
+                        FileManager.MoveAllSubFileToDir(currentDir, currentDir);
+                        FileManager.ReaNameAllSubFileByFileSize(currentDir);
                     }
                     else if (key == "0")
                     {
@@ -82,6 +87,7 @@ namespace FileTool
             Console.WriteLine("5、将【当前目录以及所有的子目录】的所有文件，按照文件类型分类，并移动到分类目录下");
             Console.WriteLine("6、将【当前目录以及所有的子目录】的所有文件，把名字包含中文的文件，移动到ChineseFile目录下");
             Console.WriteLine("7、将【当前目录以及所有的子目录】的所有文件，把名字包含英文的文件，移动到EnFile目录下");
+            Console.WriteLine("8、将【当前目录以及所有的子目录】的所有文件，移动到当前目录下，并按照大小顺序重命名文件");
             Console.WriteLine("0、退出程序");
             Console.Write("输入对应的数字：");
         }
@@ -96,11 +102,11 @@ namespace FileTool
 
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs e)
         {
-            var assemblyName = new AssemblyName(e.Name).Name ;
+            var assemblyName = new AssemblyName(e.Name).Name;
             string resourceName = "FileTool.DLL." + assemblyName + ".dll";
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
             {
-                if (stream == null) 
+                if (stream == null)
                 {
                     return null;
                 }

@@ -29,6 +29,26 @@ namespace FileTool
             }
         }
 
+        // 按照大小顺序重命名文件
+        public static void ReaNameAllSubFileByFileSize(string currentDir)
+        {
+            var allSubFileList = FileHelper.GetAllSubFile(currentDir);
+            var allSubFileInfoList = allSubFileList.Select(r => new FileInfo(r)).OrderBy(r => r.Length);
+
+            var i = 1;
+            foreach (var subFileInfo in allSubFileInfoList)
+            {
+                if (subFileInfo.Name.Contains("FileTool"))
+                {
+                    continue;
+                }
+
+                string subFileInfoExName = subFileInfo.Name.Substring(subFileInfo.Name.LastIndexOf(".") + 1);
+                FileHelper.MoveToDir(subFileInfo.FullName, currentDir, $"{i}.{subFileInfoExName}");
+                i++;
+            }
+        }
+
         // 将【当前目录以及所有的子目录】的所有文件，把名字包含中文的文件，移动到ChineseFile目录下
         public static void MoveAllSubChineseFileToDir(string dir)
         {
