@@ -80,6 +80,7 @@ namespace FileTool
                 return;
             }
 
+            containStr = containStr.ToLower();
             var subFileList = FileHelper.GetAllSubFile(dir);
             foreach (var subFileStr in subFileList)
             {
@@ -89,7 +90,7 @@ namespace FileTool
                     continue;
                 }
 
-                if (subFile.Name.Contains(containStr))
+                if (subFile.Name.ToLower().Contains(containStr))
                 {
                     FileHelper.MoveToDir(subFileStr, containDir);
                 }
