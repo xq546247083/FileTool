@@ -66,7 +66,7 @@ namespace FileTool
             Console.WriteLine("1、将【当前目录以及所有的子目录】的所有文件，移动到当前目录下");
             Console.WriteLine("2、将【当前目录以及所有的子目录】的重复文件，移动到ReapetFile目录下（按照文件大小判断）");
             Console.WriteLine("3、将【当前目录以及所有的子目录】的符合大小条件的文件，移动到SuitFile目录下");
-            Console.WriteLine("4、将【当前目录以及所有的子目录】的所有文件，移动到当前目录下（针对Wallpaper Engine,文件名为自动重名为壁纸名字）");
+            Console.WriteLine("4、将【当前目录以及所有的子目录】的所有Wallpaper Engine文件，移动到当前目录下（针对Wallpaper Engine,文件名为自动重名为壁纸名字）");
             Console.WriteLine("0、退出程序");
             Console.Write("输入对应的数字：");
         }

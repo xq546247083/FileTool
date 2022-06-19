@@ -26,6 +26,10 @@ namespace FileTool
                             targetFile.Delete();
                             file.MoveTo(targetFileName);
                         }
+                        else
+                        {
+                            file.Delete();
+                        }
                     }
                 }
             }
