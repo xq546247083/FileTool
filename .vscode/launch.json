@@ -9,10 +9,10 @@
             "type": "clr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/FileTool.exe",
+            "program": "${workspaceFolder}/bin/Debug/netframework4.7/FileTool.exe",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         }
     ]

@@ -6,8 +6,25 @@ namespace FileTool
 {
     public static class FileHelper
     {
+        // 移动文件
+        private static void DoMoveFile(string sourceFileName, string targetFileName)
+        {
+            try
+            {
+                FileInfo file = new FileInfo(sourceFileName);
+                if (file.Exists)
+                {
+                    file.MoveTo(targetFileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"移动文件出现错误:{ex}");
+            }
+        }
+
         // 移动文件到目录
-        public static void MoveToFile(string sourceFileName, string targetFolderPath)
+        public static void MoveToDir(string sourceFileName, string targetFolderPath)
         {
             try
             {
@@ -19,11 +36,7 @@ namespace FileTool
                 string fileName = Path.GetFileName(sourceFileName);
                 string targetPath = Path.Combine(targetFolderPath, fileName);
 
-                FileInfo file = new FileInfo(sourceFileName);
-                if (file.Exists)
-                {
-                    file.MoveTo(targetPath);
-                }
+                DoMoveFile(sourceFileName, targetPath);
             }
             catch (Exception ex)
             {

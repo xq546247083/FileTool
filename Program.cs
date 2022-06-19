@@ -7,6 +7,8 @@ namespace FileTool
     {
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
             var executingFilePath = Assembly.GetExecutingAssembly().Location;
             var currentDir = System.IO.Path.GetDirectoryName(executingFilePath);
             if (currentDir == null)
@@ -32,9 +34,12 @@ namespace FileTool
                     }
                     else if (key == "3")
                     {
+                        Console.Write("请输入最小文件大小(kb):");
+                        var minFileSize = Console.ReadLine();
                         Console.Write("请输入最大文件大小(kb):");
-                        var fileSize = Console.ReadLine();
-                        FileManager.MoveAllSmallFileToDir(currentDir, fileSize);
+                        var maxFileSize = Console.ReadLine();
+
+                        FileManager.MoveAllSuitFileToDir(currentDir, minFileSize,maxFileSize);
                     }
                     else if (key == "0")
                     {
@@ -55,7 +60,7 @@ namespace FileTool
             Console.WriteLine("本程序是一个简单的文件工具");
             Console.WriteLine("1、将【当前目录以及所有的子目录】的所有文件，移动到当前目录下");
             Console.WriteLine("2、将【当前目录以及所有的子目录】的重复文件，移动到ReapetFile目录下（按照文件大小判断）");
-            Console.WriteLine("3、将【当前目录以及所有的子目录】的小文件，移动到SmallFile目录下");
+            Console.WriteLine("3、将【当前目录以及所有的子目录】的复合大小条件的文件，移动到SuitFile目录下");
             Console.WriteLine("0、退出程序");
             Console.Write("输入对应的数字：");
         }
@@ -66,6 +71,23 @@ namespace FileTool
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("");
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs e)
+        {
+            var assemblyName = new AssemblyName(e.Name).Name ;
+            string resourceName = "FileTool.DLL." + assemblyName + ".dll";
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+            {
+                if (stream == null) 
+                {
+                    return null;
+                }
+
+                byte[] assemblyData = new byte[stream.Length];
+                stream.Read(assemblyData, 0, assemblyData.Length);
+                return Assembly.Load(assemblyData);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace FileTool
 {
@@ -24,7 +25,7 @@ namespace FileTool
             var fileList = Directory.GetFiles(currentDir);
             foreach (var file in fileList)
             {
-                FileHelper.MoveToFile(file, moveDir);
+                FileHelper.MoveToDir(file, moveDir);
             }
         }
 
@@ -35,7 +36,7 @@ namespace FileTool
             var sameFileList = GetAllSameFile(dir);
             foreach (var sameFile in sameFileList)
             {
-                FileHelper.MoveToFile(sameFile, reapetDir);
+                FileHelper.MoveToDir(sameFile, reapetDir);
             }
         }
 
@@ -48,16 +49,22 @@ namespace FileTool
             return fileDic.Values.Where(r => r.Count > 1).SelectMany(r => r).ToList();
         }
 
-        // 移动所有的小文件到SamllFile目录
-        public static void MoveAllSmallFileToDir(string dir, string maxFileSize)
+        // 移动所有的合适大小的文件到SuitFile目录
+        public static void MoveAllSuitFileToDir(string dir, string minFileSizeStr, string maxFileSizeStr)
         {
-            if (!long.TryParse(maxFileSize, out var maxFileSizeNum))
+            if (!long.TryParse(minFileSizeStr, out var minFileSizeNum))
             {
-                Console.WriteLine("输入的数字有误");
+                Console.WriteLine("输入的最小值有误");
                 return;
             }
 
-            var reapetDir = Path.Combine(dir, "SamllFile");
+            if (!long.TryParse(maxFileSizeStr, out var maxFileSizeNum))
+            {
+                Console.WriteLine("输入的最大值有误");
+                return;
+            }
+
+            var reapetDir = Path.Combine(dir, "SuitFile");
             var subFileList = FileHelper.GetAllSubFile(dir);
             foreach (var subFileStr in subFileList)
             {
@@ -67,9 +74,10 @@ namespace FileTool
                     continue;
                 }
 
-                if (subFile.Length/1024 < maxFileSizeNum)
+                var fileLenght = subFile.Length / 1024;
+                if (fileLenght >= minFileSizeNum && fileLenght <= maxFileSizeNum)
                 {
-                    FileHelper.MoveToFile(subFileStr, reapetDir);
+                    FileHelper.MoveToDir(subFileStr, reapetDir);
                 }
             }
         }
