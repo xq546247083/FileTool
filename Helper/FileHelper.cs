@@ -14,7 +14,19 @@ namespace FileTool
                 var file = new FileInfo(sourceFileName);
                 if (file.Exists)
                 {
-                    file.MoveTo(targetFileName);
+                    var targetFile = new FileInfo(targetFileName);
+                    if (!targetFile.Exists)
+                    {
+                        file.MoveTo(targetFileName);
+                    }
+                    else
+                    {
+                        if (file.Length > targetFile.Length)
+                        {
+                            targetFile.Delete();
+                            file.MoveTo(targetFileName);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
