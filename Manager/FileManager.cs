@@ -50,6 +50,28 @@ namespace FileTool
             }
         }
 
+        // 将【当前目录以及所有的子目录】的所有文件，把名字包含中文的文件，移动到EnFile目录下
+        public static void MoveAllSubEnFileToDir(string dir)
+        {
+            var enDir = Path.Combine(dir, "EnFile");
+
+            var subFileList = FileHelper.GetAllSubFile(dir);
+            foreach (var subFileStr in subFileList)
+            {
+                var subFile = new FileInfo(subFileStr);
+                if (subFile.Name.Contains("FileTool"))
+                {
+                    continue;
+                }
+
+                var subFileNameStr = subFile.Name.Substring(0, subFile.Name.LastIndexOf("."));
+                if (StringHelper.HasEnCh(subFileNameStr))
+                {
+                    FileHelper.MoveToDir(subFileStr, enDir);
+                }
+            }
+        }
+
         // 移动所有的wallpaper文件到当前目录
         public static void MoveAllWallpaperFileToDir(string currentDir, string moveDir)
         {
