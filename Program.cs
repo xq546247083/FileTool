@@ -49,6 +49,10 @@ namespace FileTool
                     {
                         FileManager.MoveAllSubFileToTypeDir(currentDir);
                     }
+                    else if (key == "6")
+                    {
+                        FileManager.MoveAllSubChineseFileToDir(currentDir);
+                    }
                     else if (key == "0")
                     {
                         Console.WriteLine("输入错误的数字");
@@ -72,6 +76,7 @@ namespace FileTool
             Console.WriteLine("3、将【当前目录以及所有的子目录】的符合大小条件的文件，移动到SuitFile目录下");
             Console.WriteLine("4、将【当前目录以及所有的子目录】的所有Wallpaper Engine文件，移动到当前目录下（针对Wallpaper Engine,文件名为自动重名为壁纸名字）");
             Console.WriteLine("5、将【当前目录以及所有的子目录】的所有文件，按照文件类型分类，并移动到分类目录下");
+            Console.WriteLine("6、将【当前目录以及所有的子目录】的所有文件，把名字包含中文的文件，移动到ChineseFile目录下");
             Console.WriteLine("0、退出程序");
             Console.Write("输入对应的数字：");
         }

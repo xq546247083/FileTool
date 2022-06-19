@@ -29,6 +29,27 @@ namespace FileTool
             }
         }
 
+        // 将【当前目录以及所有的子目录】的所有文件，把名字包含中文的文件，移动到ChineseFile目录下
+        public static void MoveAllSubChineseFileToDir(string dir)
+        {
+            var chineseDir = Path.Combine(dir, "ChineseFile");
+
+            var subFileList = FileHelper.GetAllSubFile(dir);
+            foreach (var subFileStr in subFileList)
+            {
+                var subFile = new FileInfo(subFileStr);
+                if (subFile.Name.Contains("FileTool"))
+                {
+                    continue;
+                }
+
+                if (StringHelper.HasChinese(subFile.Name))
+                {
+                    FileHelper.MoveToDir(subFileStr, chineseDir);
+                }
+            }
+        }
+
         // 移动所有的wallpaper文件到当前目录
         public static void MoveAllWallpaperFileToDir(string currentDir, string moveDir)
         {
@@ -69,7 +90,6 @@ namespace FileTool
         // 将【当前目录以及所有的子目录】的所有文件，按照文件类型分类，并移动到分类目录
         public static void MoveAllSubFileToTypeDir(string dir)
         {
-            var reapetDir = Path.Combine(dir, "ReapetFile");
             var subFileList = FileHelper.GetAllSubFile(dir);
             foreach (var subFileStr in subFileList)
             {
@@ -80,7 +100,7 @@ namespace FileTool
                 }
 
                 var type = subFile.Name.Substring(subFile.Name.LastIndexOf(".") + 1);
-                FileHelper.MoveToDir(subFileStr, Path.Combine(dir,type));
+                FileHelper.MoveToDir(subFileStr, Path.Combine(dir, type));
             }
         }
 
