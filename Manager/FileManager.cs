@@ -9,12 +9,12 @@ namespace FileTool
     public static class FileManager
     {
         // 移动所有的下级文件到当前目录
-        public static void MoveAllSubFileToDir(string moveDir, string currentDir)
+        public static void MoveAllSubFileToDir(string currentDir, string moveDir)
         {
             var suiDirList = Directory.GetDirectories(currentDir);
             foreach (var dir in suiDirList)
             {
-                MoveAllSubFileToDir(moveDir, dir);
+                MoveAllSubFileToDir(dir, moveDir);
             }
 
             if (moveDir == currentDir)
@@ -27,6 +27,12 @@ namespace FileTool
             {
                 FileHelper.MoveToDir(file, moveDir);
             }
+        }
+
+        // 移动所有的wallpaper文件到当前目录
+        public static void MoveAllWallpaperFileToDir(string currentDir, string moveDir)
+        {
+            var subFileList = FileHelper.GetAllSubFile(currentDir);
         }
 
         // 移动所有的相同文件到ReapetFile目录

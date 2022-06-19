@@ -11,7 +11,7 @@ namespace FileTool
         {
             try
             {
-                FileInfo file = new FileInfo(sourceFileName);
+                var file = new FileInfo(sourceFileName);
                 if (file.Exists)
                 {
                     file.MoveTo(targetFileName);
@@ -36,6 +36,25 @@ namespace FileTool
                 string fileName = Path.GetFileName(sourceFileName);
                 string targetPath = Path.Combine(targetFolderPath, fileName);
 
+                DoMoveFile(sourceFileName, targetPath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"移动文件出现错误:{ex}");
+            }
+        }
+
+        // 移动文件到目录
+        public static void MoveToDir(string sourceFileName, string targetFolderPath, string targetFileName)
+        {
+            try
+            {
+                if (!Directory.Exists(targetFolderPath))
+                {
+                    Directory.CreateDirectory(targetFolderPath);
+                }
+
+                string targetPath = Path.Combine(targetFolderPath, targetFileName);
                 DoMoveFile(sourceFileName, targetPath);
             }
             catch (Exception ex)
