@@ -11,6 +11,11 @@ namespace FileTool
         {
             try
             {
+                if (sourceFileName == targetFileName)
+                {
+                    return;
+                }
+                
                 var file = new FileInfo(sourceFileName);
                 if (file.Exists)
                 {
