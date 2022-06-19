@@ -33,6 +33,37 @@ namespace FileTool
         public static void MoveAllWallpaperFileToDir(string currentDir, string moveDir)
         {
             var subFileList = FileHelper.GetAllSubFile(currentDir);
+            var projectFileList = subFileList.Where(r =>
+            {
+                var subFile = new FileInfo(r);
+                return subFile.Name.Contains("project");
+            }).ToList();
+
+            foreach (var projectFileStr in projectFileList)
+            {
+                try
+                {
+                    var projectFile = new FileInfo(projectFileStr);
+
+                    var projectTextLines = File.ReadLines(projectFileStr).Select(r => r.Replace("\t", ""));
+                    var projectTextStr = string.Join("", projectTextLines);
+                    var projectObj = JsonConvert.DeserializeObject<dynamic>(projectTextStr);
+
+                    string wallpaperFileName = projectObj.file;
+                    string wallpaperExName = wallpaperFileName.Substring(wallpaperFileName.LastIndexOf(".") + 1);
+                    string wallpapeTitle = $"{projectObj.title}.{wallpaperExName}";
+                    FileHelper.MoveToDir(Path.Combine(projectFile.DirectoryName, wallpaperFileName), moveDir, wallpapeTitle);
+
+                    string wallpaperPreviewFileName = projectObj.preview;
+                    string wallpaperPreviewExName = wallpaperPreviewFileName.Substring(wallpaperPreviewFileName.LastIndexOf(".") + 1);
+                    string wallpapePreviewTitle = $"{projectObj.title}_Preview.{wallpaperPreviewExName}";
+                    FileHelper.MoveToDir(Path.Combine(projectFile.DirectoryName, wallpaperPreviewFileName), moveDir, wallpapePreviewTitle);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"序列化project失败，错误信息为:{ex}");
+                }
+            }
         }
 
         // 移动所有的相同文件到ReapetFile目录

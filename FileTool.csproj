@@ -9,6 +9,9 @@
 			<HintPath>DLL\Newtonsoft.Json.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
-		<EmbeddedResource Include="DLL\Newtonsoft.Json.dll" />
+		<EmbeddedResource Include="DLL\Newtonsoft.Json.dll"/>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
 	</ItemGroup>
 </Project>
