@@ -225,5 +225,42 @@ namespace FileTool
                 }
             }
         }
+
+        // 按照大小快速分组到文件夹
+        public static void MoveFileToDirByGroup(string dir, string fileCount)
+        {
+            if (!long.TryParse(fileCount, out var fileCountNum))
+            {
+                Console.WriteLine("输入有误");
+                return;
+            }
+
+            // 获取所有文件，并排序
+            var subFileList = FileHelper.GetAllSubFile(dir);
+            var subFileInfoList = new List<FileInfo>();
+            foreach (var subFileStr in subFileList)
+            {
+                var subFile = new FileInfo(subFileStr);
+                if (subFile.Name.Contains("FileTool"))
+                {
+                    continue;
+                }
+
+                subFileInfoList.Add(subFile);
+            }
+
+            // 按顺序移动到文件夹
+            subFileInfoList = subFileInfoList.OrderBy(r => r.Length).ToList();
+            var i = 0;
+            foreach (var subFile in subFileInfoList)
+            {
+                var currenPage = (int)i / fileCountNum + 1;
+
+                var currentDir = Path.Combine(dir, currenPage.ToString());
+                FileHelper.MoveToDir(subFile.FullName, currentDir);
+
+                i++;
+            }
+        }
     }
 }
