@@ -262,5 +262,39 @@ namespace FileTool
                 i++;
             }
         }
+
+        // 将【当前目录以及所有的子目录】的所有文件，重命名为：“当前文件夹名”+“ 文件名”
+        public static void RenameAllFileWithDirName(string parentDir)
+        {
+            if (!Directory.Exists(parentDir))
+            {
+                return;
+            }
+
+            // 获取当前层级的所有目录CSharp
+            var dirList = Directory.GetDirectories(parentDir);
+            foreach (var currentDir in dirList)
+            {
+                var currentDirName = Path.GetFileName(currentDir);
+                
+                // 循环所有文件
+                var allSubFileList = FileHelper.GetAllSubFile(currentDir);
+                foreach (var subFileStr in allSubFileList)
+                {
+                    var subFileInfo = new FileInfo(subFileStr);
+                    if (subFileInfo.Name.Contains("FileTool"))
+                    {
+                        continue;
+                    }
+
+                    if (subFileInfo.Name.Contains(currentDirName))
+                    {
+                        continue;
+                    }
+
+                    FileHelper.MoveToDir(subFileInfo.FullName, currentDir, $"{currentDirName} {subFileInfo.Name}");
+                }
+            }
+        }
     }
 }
