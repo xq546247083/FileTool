@@ -78,6 +78,22 @@ namespace FileTool
                     {
                         FileManager.RenameAllFileWithDirName(currentDir);
                     }
+                     else if (key == "12")
+                    {
+                        Console.Write("请输入【当前目录】的第一个文件夹名:");
+                        var firstDirStr = Console.ReadLine();
+                        Console.Write("请输入【当前目录】的第而个文件夹名:");
+                        var secondDirStr = Console.ReadLine();
+                        FileManager.MoveCompareFileToDir(currentDir,firstDirStr,secondDirStr);
+                    }
+                     else if (key == "13")
+                    {
+                        Console.Write("请输入【当前目录】的第一个文件夹名:");
+                        var firstDirStr = Console.ReadLine();
+                        Console.Write("请输入【当前目录】的第而个文件夹名:");
+                        var secondDirStr = Console.ReadLine();
+                        FileManager.MoveFullCompareFileToDir(currentDir,firstDirStr,secondDirStr);
+                    }
                     else if (key == "0")
                     {
                         Console.WriteLine("输入错误的数字");
@@ -107,6 +123,8 @@ namespace FileTool
             Console.WriteLine("9、将【当前目录以及所有的子目录】的所有文件，包含【特定字符】的文件，移动到【特定字符】目录下");
             Console.WriteLine("10、将【当前目录以及所有的子目录】的所有文件，按照大小快速分组到文件夹");
             Console.WriteLine("11、将【当前目录以及所有的子目录】的所有文件，重命名为：“当前文件夹名”+“ 文件名”");
+            Console.WriteLine("12、按照名字对比【当前目录】的两个文件夹，将第二个文件夹不相同的文件移动到NotCompare目录");
+            Console.WriteLine("13、按照名字和大小对比【当前目录】的两个文件夹，将第二个文件夹不相同的文件移动到FullNotCompare目录");
             Console.WriteLine("0、退出程序");
             Console.Write("输入对应的数字：");
         }

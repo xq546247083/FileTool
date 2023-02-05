@@ -276,7 +276,7 @@ namespace FileTool
             foreach (var currentDir in dirList)
             {
                 var currentDirName = Path.GetFileName(currentDir);
-                
+
                 // 循环所有文件
                 var allSubFileList = FileHelper.GetAllSubFile(currentDir);
                 foreach (var subFileStr in allSubFileList)
@@ -295,6 +295,106 @@ namespace FileTool
                     FileHelper.MoveToDir(subFileInfo.FullName, currentDir, $"{currentDirName} {subFileInfo.Name}");
                 }
             }
+        }
+
+        // 按照名字对比【当前目录】的两个文件夹，将第二个文件夹多余的文件移动到NotCompare目录
+        public static void MoveCompareFileToDir(string currentDir, string firstDirStr, string secondDirStr)
+        {
+            var firstDir = Path.Combine(currentDir, firstDirStr);
+            if (!Directory.Exists(firstDir))
+            {
+                return;
+            }
+
+            var secondDir = Path.Combine(currentDir, secondDirStr);
+            if (!Directory.Exists(secondDir))
+            {
+                return;
+            }
+
+            var compareDir = Path.Combine(currentDir, "NotCompare");
+            var firstDirFileList = FileHelper.GetAllSubFile(firstDir);
+            var secondDirFileList = FileHelper.GetAllSubFile(secondDir);
+            foreach (var secondDirFileStr in secondDirFileList)
+            {
+                var secondDirFile = new FileInfo(secondDirFileStr);
+                if (secondDirFile.Name.Contains("FileTool"))
+                {
+                    continue;
+                }
+
+                bool isExist = false;
+                foreach (var firstDirFileStr in firstDirFileList)
+                {
+                    var firstDirFile = new FileInfo(firstDirFileStr);
+                    if (firstDirFile.Name.Contains("FileTool"))
+                    {
+                        continue;
+                    }
+
+                    if (firstDirFile.Name == secondDirFile.Name)
+                    {
+                        isExist = true;
+                    }
+                }
+
+                // 如果不存在，这移动
+                if (!isExist)
+                {
+                    FileHelper.MoveToDir(secondDirFileStr, compareDir);
+                }
+            }
+
+        }
+
+        // 按照名字和大小对比【当前目录】的两个文件夹，将第二个文件夹多余的文件移动到NotFullCompare目录
+        public static void MoveFullCompareFileToDir(string currentDir, string firstDirStr, string secondDirStr)
+        {
+            var firstDir = Path.Combine(currentDir, firstDirStr);
+            if (!Directory.Exists(firstDir))
+            {
+                return;
+            }
+
+            var secondDir = Path.Combine(currentDir, secondDirStr);
+            if (!Directory.Exists(secondDir))
+            {
+                return;
+            }
+
+            var fullCompareDir = Path.Combine(currentDir, "NotFullCompare");
+            var firstDirFileList = FileHelper.GetAllSubFile(firstDir);
+            var secondDirFileList = FileHelper.GetAllSubFile(secondDir);
+            foreach (var secondDirFileStr in secondDirFileList)
+            {
+                var secondDirFile = new FileInfo(secondDirFileStr);
+                if (secondDirFile.Name.Contains("FileTool"))
+                {
+                    continue;
+                }
+
+                bool isExist = false;
+                foreach (var firstDirFileStr in firstDirFileList)
+                {
+                    var firstDirFile = new FileInfo(firstDirFileStr);
+                    if (firstDirFile.Name.Contains("FileTool"))
+                    {
+                        continue;
+                    }
+
+                    if (firstDirFile.Name == secondDirFile.Name && firstDirFile.Length == secondDirFile.Length)
+                    {
+                        isExist = true;
+                    }
+                }
+
+                // 如果不存在，这移动
+                if (!isExist)
+                {
+                    FileHelper.MoveToDir(secondDirFileStr, fullCompareDir);
+                }
+            }
+
         }
     }
 }
