@@ -124,8 +124,8 @@ namespace FileTool
             Console.WriteLine("900、将【当前目录以及所有的子目录】的所有文件，包含【特定字符】的文件，移动到【特定字符】目录下");
             Console.WriteLine("901、将【当前目录以及所有的子目录】的符合大小条件的文件，移动到SuitFile目录下");
             Console.WriteLine("902、将【当前目录以及所有的子目录】的所有文件，按照大小快速分组到文件夹");
-            Console.WriteLine("903、将【当前目录】的两个文件夹按照名字对比，将第二个文件夹不相同的文件移动到NotCompare目录");
-            Console.WriteLine("904、将【当前目录】的两个文件夹按照名字和大小对比，将第二个文件夹不相同的文件移动到FullNotCompare目录");
+            Console.WriteLine("903、将【当前目录】的两个文件夹的所有文件按照名字对比，将第二个文件夹不相同的文件移动到NotCompare目录");
+            Console.WriteLine("904、将【当前目录】的两个文件夹的所有文件按照名字和大小对比，将第二个文件夹不相同的文件移动到FullNotCompare目录");
             Console.WriteLine("0、退出程序");
             Console.Write("输入对应的数字：");
         }
